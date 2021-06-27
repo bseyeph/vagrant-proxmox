@@ -17,11 +17,8 @@
 /pkg
 *.gem
 *~
+Gemfile.lock
+Vagrantfile
 
 # Ignore generated coverage reports
 /coverage
-
-# IntelliJ
-.iws
-.idea/
-atlassian-ide-plugin.xml
