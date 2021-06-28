@@ -4,6 +4,7 @@
 Vagrant.configure('2') do |config|
   config.vm.box_download_insecure = true
   config.vm.provider :proxmox do |proxmox|
+    proxmox.box_download_insecure = true
     proxmox.endpoint = 'https://192.168.1.10:8006/api2/json'
     proxmox.user_name = 'vagrant@pve'
     proxmox.password = 'vagrant'

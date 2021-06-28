@@ -2,9 +2,7 @@ require 'spec_helper'
 require 'vagrant-proxmox/provider'
 
 module VagrantPlugins::Proxmox
-
   describe Provider do
-
     let(:machine) { environment.machine(environment.primary_machine_name, :proxmox) }
     let(:environment) { Vagrant::Environment.new vagrantfile_name: 'dummy_box/Vagrantfile' }
     let(:ui) { double('ui').as_null_object }
@@ -22,7 +20,5 @@ module VagrantPlugins::Proxmox
         expect(subject.ssh_info).to eq('ssh_info')
       end
     end
-
   end
-
 end

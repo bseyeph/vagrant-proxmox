@@ -2,34 +2,30 @@ require 'spec_helper'
 require 'actions/proxmox_action_shared'
 
 describe VagrantPlugins::Proxmox::Action::IsCreated do
+  let(:environment) { Vagrant::Environment.new vagrantfile_name: 'dummy_box/Vagrantfile' }
+  let(:env) { { machine: environment.machine(environment.primary_machine_name, :proxmox) } }
 
-	let(:environment) { Vagrant::Environment.new vagrantfile_name: 'dummy_box/Vagrantfile' }
-	let(:env) { {machine: environment.machine(environment.primary_machine_name, :proxmox)} }
+  subject(:action) { described_class.new(->(_) {}, environment) }
 
-	subject(:action) { described_class.new(-> (_) {}, environment) }
+  describe '#call' do
+    before { allow(env[:machine].provider).to receive_messages state: Vagrant::MachineState.new(nil, nil, nil) }
 
-	describe '#call' do
+    it_behaves_like 'a proxmox action call'
 
-		before { allow(env[:machine].provider).to receive_messages :state => Vagrant::MachineState.new(nil, nil, nil) }
+    context 'when the machine is stopped' do
+      before do
+        allow(env[:machine].provider).to receive_messages state: Vagrant::MachineState.new(:stopped, '', '')
+        action.call env
+      end
+      specify { expect(env[:result]).to eq(true) }
+    end
 
-		it_behaves_like 'a proxmox action call'
-
-		context 'when the machine is stopped' do
-			before do
-				allow(env[:machine].provider).to receive_messages :state  => Vagrant::MachineState.new(:stopped, '', '')
-				action.call env
-			end
-			specify { expect(env[:result]).to eq(true) }
-		end
-
-		context 'when the machine is not created' do
-			before do
-				allow(env[:machine].provider).to receive_messages  :state => Vagrant::MachineState.new(:not_created, '', '')
-				action.call env
-			end
-			specify { expect(env[:result]).to eq(false) }
-		end
-
-	end
-
+    context 'when the machine is not created' do
+      before do
+        allow(env[:machine].provider).to receive_messages state: Vagrant::MachineState.new(:not_created, '', '')
+        action.call env
+      end
+      specify { expect(env[:result]).to eq(false) }
+    end
+  end
 end
