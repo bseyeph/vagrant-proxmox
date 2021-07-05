@@ -7,13 +7,19 @@ Vagrant.configure('2') do |config|
     proxmox.endpoint = 'https://192.168.1.10:8006/api2/json'
     proxmox.user_name = 'vagrant@pve'
     proxmox.password = 'vagrant'
+    proxmox.vm_type = :qemu
+    proxmox.qemu_os = :l26
     proxmox.vm_name_prefix = 'range_'
-    proxmox.vm_id_range = 900..910
-    proxmox.openvz_os_template = 'local:vztmpl/ubuntu-base.tar.gz'
-    proxmox.vm_type = :lxc
+    proxmox.qemu_format = 'raw'
+    proxmox.qemu_storage = 'local-lvm'
+    proxmox.qemu_template = 'local:vztmpl/ubuntu-base.tar.gz'
+    # proxmox.qemu_iso = 'local:iso/ubuntu-20.04.1-live-server-amd64.iso'
+    proxmox.qemu_disk_size = '60G'
     proxmox.vm_memory = 1024
-    proxmox.vm_storage = 'local'
-    proxmox.vm_disk_size = '50G'
+    proxmox.qemu_cores = 1
+    proxmox.qemu_sockets = 1
+    proxmox.qemu_nic_model = 'virtio'
+    proxmox.qemu_bridge = 'vmbr0'
   end
 
   config.vm.define :box, primary: true do |box|

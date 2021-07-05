@@ -13,10 +13,9 @@ Gem::Specification.new do |spec|
   spec.description  = 'Enables Vagrant to manage virtual machines on a Proxmox server.'
 
   spec.required_ruby_version = '>= 2.5'
-  spec.required_rubygems_version = '>= 3.0.0'
   spec.add_runtime_dependency 'activesupport', '~> 6.1.4'
   spec.add_runtime_dependency 'rest-client', '~> 2.1.0'
-  spec.add_runtime_dependency 'retryable', '~> 3.0.5'
+  spec.add_runtime_dependency 'retryable', '~> 1.3.3'
   spec.add_development_dependency 'awesome_print', '~> 1.9.2'
   spec.add_development_dependency 'cucumber', '~> 6.1.0'
   spec.add_development_dependency 'geminabox', '~> 1.4.1'
